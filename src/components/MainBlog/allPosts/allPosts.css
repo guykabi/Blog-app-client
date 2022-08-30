@@ -1,0 +1,19 @@
+.popolarPostsHeader{
+    font-weight: 500;
+    font-size: x-large;
+    border-bottom: 1px gray solid;
+    width: 20%;
+    margin-left: 30rem;
+    padding-bottom: 5px;
+  } 
+  .popolarDiv{
+    text-align: center;
+    
+  } 
+  .allPostsDiv{
+    overflow: scroll;
+    white-space:nowrap;
+    overflow-y: hidden;
+  }
+  
+  

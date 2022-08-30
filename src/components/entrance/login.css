@@ -1,0 +1,52 @@
+.mainlogindiv{
+    text-align: center;
+    margin-top: 6rem;
+    margin-left: 30rem;
+    width: 20rem;
+    height: fit-content;
+    padding: 1rem;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.6);
+    
+} 
+.form input{
+   margin-bottom: 8px;
+   width: 70%;
+   height: 2rem;
+   border: 0px solid rgb(115, 112, 112);
+   background-color: rgba(229, 229, 219, 0.51);
+   border: 1px solid lightgray;
+   box-shadow: 0 3px 10px rgb(0 0 0 / 0.1);
+} 
+.form button{
+    width: 70%;
+    height: 2.2rem;
+    background-color: rgb(174, 180, 174);
+    border: 1px solid lightgrey;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+
+form input::placeholder{
+    text-align: center;
+} 
+
+
+.resetInput{
+   margin-bottom: 8px;
+   width: 50%;
+   height: 1.6rem;
+   border: 0px solid rgb(115, 112, 112);
+   border-radius: 4px;
+   background-color: rgba(229, 229, 219, 0.51);
+   border: 1px solid lightgray;
+   box-shadow: 0 3px 10px rgb(0 0 0 / 0.1);
+}
+.resetbtn{
+    width: 50%;
+    height: 2.2rem;
+    background-color: rgb(174, 180, 174);
+    border: 1px solid lightgrey;
+    cursor: pointer;
+    margin-top: 1rem;   
+}

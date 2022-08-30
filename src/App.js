@@ -1,23 +1,45 @@
-import logo from './logo.svg';
 import './App.css';
+import {Routes,Route} from 'react-router-dom'  
+import Login from './components/entrance/login'
+import MainBlog from './components/MainBlog/mainBlog';
+import Addpost from './components/MainBlog/Addpost/addPost';
+import AllPosts from './components/MainBlog/allPosts/allPosts';
+import MyPosts from './components/MainBlog/Myposts/myPosts';
+import SignUp from './components/entrance/signUp';
+import Reset from './components/entrance/reset';
+import {useState} from 'react'
+import Context from './context/Context';
+import SinglePost from './components/MainBlog/singlePost/singlePost';
+import Profile from './components/Profile/profile';
 
 function App() {
+
+   //const [arrivedTokenData,setArrivedTokenData]=useState(null)
+   const [val, setVal] = useState(false);
+   
+    const Delete = () =>{
+      setVal(false)
+      localStorage.clear()
+    }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Context.Provider value={{val,setVal}}>
+        <Routes>  
+        <Route path='/' element={<Login/>}/>
+            <Route path='signup' element={<SignUp/>}/>
+            <Route path='reset' element={<Reset/>}/>
+            <Route path='/profile' element={<Profile/>}/>
+          <Route path='/main' element={<MainBlog deleteToken={Delete} />}> {/*all user data comes in the arrivedToken*/}
+               <Route path='addPost' element={<Addpost/>}/>
+               <Route path='allPosts' element={<AllPosts/>}/>
+               <Route path='myPosts' element={<MyPosts/>}/>
+               <Route path='singlePost/:id' element={<SinglePost/>}/>
+          </Route>
+        </Routes>
+        </Context.Provider>
+        
+         
     </div>
   );
 }

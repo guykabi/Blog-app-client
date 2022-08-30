@@ -1,0 +1,50 @@
+
+
+.formDiv{
+   text-align: center;
+   width: 20rem;
+   height: fit-content;
+   padding: 3rem;
+   margin-left: 26rem;
+   margin-top: 8rem;
+  
+   box-shadow: 0 3px 10px rgb(0 0 0 / 0.6);
+}
+
+
+.signupForm{
+    text-align: center;
+    margin-left: 1rem;
+}
+.signupForm input{
+    width: 18rem;
+    height: 1.6rem;
+    margin-bottom: 5px;
+    border: none;
+    border-bottom: 1px solid rgb(72, 69, 69);
+    
+} 
+.signupForm input::placeholder {
+   text-align: left;
+}
+.signupbtn{
+    background-color: rgb(174, 180, 174);
+    height: 2rem;
+    width: 8rem;
+    border: none;
+    cursor: pointer;
+} 
+.returnbtn{
+    background-color: rgb(174, 180, 174);
+    height: 2rem;
+    border: none;
+    width: 6rem;
+    cursor: pointer;
+} 
+
+.confirmInput{
+    background-image: url('../../vSign_input.png');
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: right;
+}
