@@ -6,6 +6,7 @@
 .imageDiv2{
     width: 100%;
     height: 25rem;
+    margin: 0 auto;
 }
 
 .imageDiv2 img{
@@ -15,10 +16,10 @@
 }
 .overlay{
         content: '';
-        width: 75%;
+        width: 80%;
         height: 30%;
         position: absolute;
-        margin-left: 11rem;
+        margin: 0 auto;
         margin-top: 21rem;
         z-index: 2;
         top: 0;
@@ -31,30 +32,30 @@
      height: fit-content;
      border: solid 1px rgba(142, 166, 197, 0.807);
      padding: 2rem;
-     margin-left: 9rem;
+     margin: 0 auto;
 }
 .postDetailsDiv h2{
-    margin-left: 18rem;
-    margin-top: -2rem;
+    margin: 0 auto;
     border-bottom: 1px solid black;
     width: 30%;
 }
 .postDetailsDiv h2 span{
     margin-left: 1rem;
     font-size: small;
+    margin: 0 auto;
     
 }
 .commentInput{
-    width:18rem;
+    width:30%;
     height: 2rem;
     border-radius: 8px;
     border: 1.8px solid gray;
+    margin: 0 auto;
 }
 .comments{
-    margin-left: 15rem;
-    margin-top: 2rem;
+   margin: 0 auto;
     text-align: center;
-    width: 15rem;
+    width: 30%;
     height: fit-content;
     padding: 1rem;
    
@@ -80,4 +81,16 @@
 
 .deleteSignComment{
     display: none;
+}
+
+.btnComment{
+    width: 8%;
+    height: 2.2rem;
+    background-color: rgb(174, 180, 174);
+    border: 1px solid lightgrey;
+    margin-left: 1%;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 1rem;   
+    overflow: hidden;
 }

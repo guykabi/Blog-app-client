@@ -7,20 +7,21 @@ import './login.css'
 
 
 const Login = (props) =>{ 
-   const [loginDetails,setLoginDetails]=useState({}) 
-   const [incorrectDetail,setIncorrectDetail]=useState(null)
-   const [emailObj,setEmailObj]=useState({})
-   const [resetByEmailBoolean,setResetByEmailBoolean]=useState(false)
-   const [emailExists,setEmailExists]=useState(false)
+   const [loginDetails,setLoginDetails]=useState({}) //Set the username and password which the user typed
+   const [incorrectDetail,setIncorrectDetail]=useState(null)//Take the error message from the server if there is
+   const [emailObj,setEmailObj]=useState({}) //Set the email to check its validity send the code to that email
+   const [resetByEmailBoolean,setResetByEmailBoolean]=useState(false) //Trigger the reset password section/input
+   const [emailExists,setEmailExists]=useState(false)//Boolean to check if the email address the user provided is exists 
+   const [atSign,setAtSign]=useState(false)//Checks if the atSign is included inside the email provided
    const navigate = useNavigate() 
    const inputRef = useRef()
 
-     const userDetails = (e) =>{
+     const userDetails = (e) =>{//Sets the user username and password into state object
        const{name,value}=e.target 
        setLoginDetails({...loginDetails,[name]:value}) 
      }
 
-     const checkUser = async(e) =>{
+     const checkUser = async(e) =>{//Checks the user username and password
       e.preventDefault()
         try{
              let {data:res} = await axios.post('http://localhost:8000/api/users',loginDetails)
@@ -38,7 +39,16 @@ const Login = (props) =>{
                                                         
      }  
 
-     const emailCheck =async () =>{
+     const emailCheck =async () =>{//Checks if the email exists in the database
+      if(!emailObj.Email.includes('@'))
+      {
+        setAtSign(true)
+        setTimeout(()=>{
+           setAtSign(true)
+        },)
+      }
+      else{
+
       try{
 
         let {data:res}= await axios.get('http://localhost:8000/api/users/'+emailObj.Email)//Checking if the email exists in the database
@@ -61,10 +71,11 @@ const Login = (props) =>{
         {
               console.log(err)
         }
+      }
      }
     
 
-     const handleEmailType = (e)=>{
+     const handleEmailType = (e)=>{ //Function that set the email of the user who forgot his password
        const {name,value}= e.target 
        setEmailObj({...emailObj,[name]:value})
      }
@@ -72,7 +83,6 @@ const Login = (props) =>{
 
     return(
              <div className='mainlogindiv'>
-              
                    <div className='form-header'>
                       <h1>🔒</h1>
                       <h3>Log in</h3>
@@ -86,9 +96,17 @@ const Login = (props) =>{
                              <input required placeholder='Password' type="password" onChange={userDetails} name="Password"  /><br />
                              <button type='submit'>LOG IN</button>
                       </form> 
-                      <Link to={'signup'} style={{fontSize:'small',color:'blue'}}>Dont have an account?</Link>&nbsp; <span  onClick={(e)=>{setResetByEmailBoolean(!resetByEmailBoolean)}} style={{fontSize:'small',cursor:'pointer',color:'blue',textDecoration:'underline'}}>Forgot password?</span> <br /><br />
+                      <Link to={'signup'} style={{fontSize:'small',color:'blue'}}>Dont have an account?</Link>&nbsp; 
+                      <span  onClick={(e)=>{setResetByEmailBoolean(!resetByEmailBoolean)}} 
+                      style={{fontSize:'small',
+                      cursor:'pointer',
+                      color:'blue',
+                      textDecoration:'underline'}}>
+                      Forgot password?</span>
+                       <br /><br />
                       {resetByEmailBoolean&&<div>
-                        <input ref={inputRef} className='resetInput' placeholder={emailExists?'Email is not exists':'Insert Email'} type="text" name='Email' onChange={handleEmailType} /><br />
+                        <input ref={inputRef} className='resetInput' placeholder={emailExists?'Email is not exists':'Insert Email'} type="text" name='Email' onChange={handleEmailType} /> <br />
+                        {atSign&&<span>Email must include - @</span>}<br />
                         <button onClick={emailCheck} className='resetbtn'>Reset</button>
                       </div>}
                    </div>
