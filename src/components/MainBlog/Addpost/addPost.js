@@ -5,7 +5,7 @@ import axios, {Axios} from 'axios'
 
 const Addpost = ()=>{
    
-  const [tokenData,setTokenData]=useState(null)
+  const [tokenData,setTokenData]=useState(null)//State that save the user data
   const [tempBackgroundInput,setTempBackgroundInput]=useState(null)
   const [file,setFile]=useState(null)
   const [postDetails,setPostDetails]=useState({})
