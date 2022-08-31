@@ -104,7 +104,7 @@ const Login = (props) =>{
                       textDecoration:'underline'}}>
                       Forgot password?</span>
                        <br /><br />
-                      {resetByEmailBoolean&&<div>
+                      {resetByEmailBoolean&&<div> {/*The div of inserting the email to send the code*/}
                         <input ref={inputRef} className='resetInput' placeholder={emailExists?'Email is not exists':'Insert Email'} type="text" name='Email' onChange={handleEmailType} /> <br />
                         {atSign&&<span>Email must include - @</span>}<br />
                         <button onClick={emailCheck} className='resetbtn'>Reset</button>
