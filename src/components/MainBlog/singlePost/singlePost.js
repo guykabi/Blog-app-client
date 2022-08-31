@@ -11,7 +11,7 @@ const SinglePost = (props) =>{
     let [numOfLike,setNumOfLike]=useState(0)//Count the number of like of the post
     const [emptyComment,setEmptyComment]=useState(false) //Checks if the user typed anything to the comment input
     const {id} = useParams()
-    const PF = 'http://localhost:8000/images/'
+    const PF = 'http://localhost:8000/images/' //The url of the images file in the server
 
     useEffect(()=>{
         const getPostData =async ()=>{
