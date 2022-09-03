@@ -10,12 +10,11 @@
 }
 
 .imageDiv2 img{
-    width: 60%;
+    width: 50%;
     height: 80%;
     border-radius: 6px;
 }
 .overlay{
-        content: '';
         width: 80%;
         height: 30%;
         position: absolute;
@@ -53,29 +52,29 @@
     margin: 0 auto;
 }
 .comments{
-   margin: 0 auto;
+    margin: 0 auto;
     text-align: center;
-    width: 30%;
+    width: 40%;
     height: fit-content;
     padding: 1rem;
    
 }
 .singleComment{
-    width: 80%;
+    position: relative;
+    width: 100%;
     height: fit-content;
     padding: 0.5rem;
-    border: 1px black solid;
     margin-bottom: 1rem;
-    border: 1px solid black;
     border-radius: 8px;
-    
+    box-shadow: 1px 1px 4px 4px rgba(57, 55, 55, 0.350);
+    overflow: hidden;
+    word-break:break-word;
 }
 .singleComment:hover .deleteSignComment{
-    z-index: 10;
     display: block;
     position: absolute;
-    margin-left: 11rem;
-    margin-top: -3rem;
+    right: 4px;
+    top: 0px;
     cursor: pointer;
 }
 
@@ -93,4 +92,9 @@
     cursor: pointer;
     margin-top: 1rem;   
     overflow: hidden;
+}
+
+.commentContentDiv{
+    width: 90%;
+    
 }

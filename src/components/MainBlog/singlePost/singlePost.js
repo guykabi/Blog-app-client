@@ -1,7 +1,9 @@
 import './singlePost.css'
 import axios, {Axios} from 'axios'
-import { useEffect, useState } from 'react'
+import { useEffect, useState,useRef } from 'react'
 import { useParams } from 'react-router-dom'
+import {format} from 'timeago.js'
+
 
 const SinglePost = (props) =>{
     const [postData,setPostData]=useState(null)
@@ -10,7 +12,9 @@ const SinglePost = (props) =>{
     const [changeToGetExtraData,setChangeToGetExtraData]=useState(false)
     let [numOfLike,setNumOfLike]=useState(0)//Count the number of like of the post
     const [emptyComment,setEmptyComment]=useState(false) //Checks if the user typed anything to the comment input
+    const [sureToDelete,setSureToDelete]=useState(null)// Set the chosen comment to delete
     const {id} = useParams()
+    const inputRef = useRef()
     const PF = 'http://localhost:8000/images/' //The url of the images file in the server
 
     useEffect(()=>{
@@ -76,12 +80,33 @@ const SinglePost = (props) =>{
            const {data:res} = await axios.patch('http://localhost:8000/api/posts/'+id,obj)
            if(res === 'Comment has been made'){
               setChangeToGetExtraData(!changeToGetExtraData)//Trigger the useEffect that gets the new data
+              inputRef.current.value = ''
            }
       }catch(err)
       {
         console.log(err)
       }
     }
+   useEffect(()=>{
+    if(sureToDelete !== null)
+    {
+    const deletePost= async() =>{
+      let obj = {Comments:[{_id:sureToDelete}]}
+      try{
+        const {data:res}=await axios.patch('http://localhost:8000/api/posts/'+postData[0]._id,obj)
+        if(res === 'Comment deleted')
+        {
+        setChangeToGetExtraData(!changeToGetExtraData)//Trigger the useEffect that gets the new data
+        }
+      }catch(err)
+      {
+        console.log(err)
+      }
+    }
+    deletePost()
+  }
+   },[sureToDelete])
+    
 
 
     return(
@@ -94,20 +119,21 @@ const SinglePost = (props) =>{
                  <h2>{postData?.[0]?.Title}<span>❤️️{numOfLike}</span></h2>   
                  <span>{postData?.[0]?.Name}&nbsp;is: {postData?.[0]?.Subtitle}</span> <br />
                  <h4>{postData?.[0]?.Content}</h4> <br />
-                 <input onChange={handleComment} name='Content' className='commentInput' type="text" placeholder={'Say somthing nice to'+' '+`${postData?.[0]?.Name}`}/>
-                  <button disabled={!emptyComment} className='btnComment' onClick={submitComment}>Send</button> 
+                 <input onChange={handleComment} ref={inputRef} name='Content' className='commentInput' type="text" placeholder={'Say somthing nice to'+' '+`${postData?.[0]?.Name}`}/>
+                  <button disabled={!emptyComment} className='btnComment' onClick={submitComment}>Send</button>  <br /> <br />
                  <div className='comments'>
                  {postData?.[0]?.Comments?.map(c=>(
-                      <div className='singleComment'>
+                      <div className='singleComment'> 
                         <span 
                         style={{float:'left',
-                        border:'solid black 1px',
-                        borderRadius:'50%',
-                        padding:'0.4rem'}}>
-                        {c.Username.slice(0,1)}
+                        borderBottom:'solid gray 1px',
+                        borderRadius:'40%',
+                        fontSize:'small',
+                        padding:'0.3rem'}}>
+                        {c.Username}
                           </span> <br />
-                         {c.Content}
-                         <span onClick={()=>{alert('djnwdj')}} className='deleteSignComment'>x</span>
+                         <div className='commentContentDiv'>{c.Content}</div> &nbsp; <div style={{fontSize:'x-small',float:'right',marginTop:'4%'}}>{format(c.createdAt)}</div>
+                         {c.Username === userData.Data.Name&&<span onClick={()=>{setSureToDelete(c._id)}} className='deleteSignComment'>x</span>}{/*Working only if the comment belongs to the user*/}
                    </div> 
                  ))}
                  </div>
