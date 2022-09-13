@@ -11,7 +11,8 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useContext } from 'react';
+import Context from '../context/Context';
 import { useNavigate } from 'react-router-dom';
 import axios, {Axios} from 'axios'
 
@@ -29,6 +30,7 @@ const ExpandMore = styled((props) => {
 const Cards = (props) =>{
 
   const [expanded, setExpanded] = useState(false);
+  const ctx = useContext(Context) //Context
   const [randomColor,setRandomColor]=useState(null)
   const [like,setLike]=useState(false) //Change like sign
   const userData =  JSON.parse(localStorage.getItem('tokenData'))//Pulling out the data from the localstorgae
@@ -91,14 +93,22 @@ const Cards = (props) =>{
       setLike(false)
     }
   },[])
+
+  const deletePost =async () =>{
+         ctx.setVal('deletePost',[{'myPostIdToDelete':props.data._id,'state':true}])
+  }
  
 
     return(
-        <Card  elevation={9} style={{borderRadius:'12px',marginLeft:'12rem',marginBottom:'2rem'}} className='card'>
+        <Card  elevation={9} style={{background:'rgba(245, 245, 245, 0.401)',borderRadius:'12px',marginLeft:'12rem',marginBottom:'2rem'}} className='card'>
+          {props?.isDeleted&&<div onClick={deletePost} className='deleteSignCard'>x</div>}
             <CardHeader  title={props.data.Title} titleTypographyProps={{variant:'h6' }}
-             avatar={
-                <Avatar  style={{backgroundColor:'#'+randomColor}} aria-label="recipe">
-                 {props.data.Name.slice(0,1)}
+             avatar={props.isAvatar?null:
+                <Avatar 
+                  onClick={()=>{navigate('/main/singleUser/'+props?.data?.UserId)}}
+                  style={props?.data?.ProfileImage?{background:`url(${PF+props?.data?.ProfileImage})`,backgroundSize:'cover',backgroundPosition:'center'}:{backgroundColor:'#'+randomColor,cursor:'pointer'}}
+                  aria-label="recipe">
+                 {!props?.data?.ProfileImage&&props.data.Name.slice(0,1)}
                 </Avatar>
               }/>
             <CardMedia
@@ -107,7 +117,7 @@ const Cards = (props) =>{
              component="img"
               height="194"
               image={PF+props.data?.Image}
-              alt="Paella dish"/>
+             />
            <CardContent>
              <Typography variant="body2" color="text.secondary">
                  {props.data.Subtitle}
@@ -128,8 +138,7 @@ const Cards = (props) =>{
            </CardActions>
         <Collapse  in={expanded} timeout="auto" unmountOnExit>
           <CardContent >
-            <Typography paragraph>Method:</Typography>
-            <Typography paragraph>
+            <Typography  paragraph>
               {props.data.Content}
             </Typography>
             <Typography paragraph>

@@ -1,0 +1,16 @@
+.myPostsDiv{
+    text-align: center;
+    min-height: 100%;
+}
+.myPostsDiv h1{
+    margin: 0 auto;
+}
+.innerMyPostsDiv{
+    margin-left: -10%;
+}
+
+.noMyPosts{
+    text-align: center;
+    margin-top: 5%;
+    margin-bottom: 10%;
+}

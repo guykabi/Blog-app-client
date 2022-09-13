@@ -1,5 +1,6 @@
 import './addPost.css'
 import {useState,useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
 import axios, {Axios} from 'axios'
 
 
@@ -9,6 +10,7 @@ const Addpost = ()=>{
   const [tempBackgroundInput,setTempBackgroundInput]=useState(null)
   const [file,setFile]=useState(null)
   const [postDetails,setPostDetails]=useState({})
+  const navigate = useNavigate()
   const PF = 'http://localhost:8000/images/'//The path to saved images in the server
 
 
@@ -25,7 +27,7 @@ const Addpost = ()=>{
       
       setPostDetails({...postDetails,[e.target.name]:Date.now() + e.target.files[0].name})
       setFile(e.target.files[0])
-      setTempBackgroundInput(URL.createObjectURL(e.target.files[0]))
+      setTempBackgroundInput(URL.createObjectURL(e.target.files[0]))//Create a URL for the file
      }
      else{
         const {name,value}=e.target 
@@ -42,6 +44,7 @@ const Addpost = ()=>{
         let obj = postDetails
         obj.UserId=tokenData.Data._id
         obj.Name=tokenData.Data.Name
+        obj.ProfileImage = tokenData.Data.Image
         const data = new FormData()
         const fileName = postDetails.Image
        
@@ -55,7 +58,11 @@ const Addpost = ()=>{
       {
         try{
            const {data:res2}=await axios.post('http://localhost:8000/api/posts',obj)//Setting the new post inside the database
-           console.log(res2)
+           if(res2 === 'Post Added')
+           {
+            navigate('/main/allPosts')
+           }
+           
         }catch(error)
         {
           console.log(error)
@@ -73,11 +80,11 @@ const Addpost = ()=>{
     return(
         <div className='mainDiv'>
          <div className='centralDiv'>
-           <h1> What is your next post {tokenData?.Data?.Name} ? </h1> <br />
+           <h2> What is your next post {tokenData?.Data?.Name} ? </h2> <br />
            <div>
              <form onSubmit={sendPost} className='formAddPost'>
                 <input required onChange={handlePostDeatils} type="text" name='Title' placeholder='Title' /> <input required onChange={handlePostDeatils} type="text" name='Subtitle' placeholder='Feeling...' /> <br /> <br />
-                <textarea required onChange={handlePostDeatils} className='addPostTextArea' placeholder='Tell us about your experience' name="Content" cols="50" rows="4"></textarea> <br />
+                <textarea required onChange={handlePostDeatils} className='addPostTextArea' placeholder='Tell us about your experience' name="Content"  rows="4"></textarea> <br />
                 <input required onChange={handlePostDeatils} style={tempBackgroundInput?{backgroundImage:`url(${tempBackgroundInput})`}:{backgroundImage:`url(${PF+'camera.jpg'})` }} id='uplaodImageInput'  type="file" name='Image' />
                 <br />
                 <button className='btnSubmit' type='submit'>Create!</button>

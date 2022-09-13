@@ -5,15 +5,36 @@
     width: 20%;
     margin-left: 30rem;
     padding-bottom: 5px;
+  
   } 
   .popolarDiv{
     text-align: center;
+    background-color: rgba(197, 231, 231, 0.711);
+    
     
   } 
   .allPostsDiv{
     overflow: scroll;
+    background-color: rgba(197, 231, 231, 0.711);
     white-space:nowrap;
     overflow-y: hidden;
+    padding-right: 2rem;
   }
+  ::-webkit-scrollbar {
+   width: 10px;
+   height: 6px;
+  } 
+
+::-webkit-scrollbar-thumb {
+  background: rgba(136, 136, 136, 0.428);
+  border-radius: 8px;
+ 
+}
+
   
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+} 
+
+
   

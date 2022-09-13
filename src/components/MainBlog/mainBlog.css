@@ -1,4 +1,6 @@
-
+.main{
+  background-color: rgba(197, 231, 231, 0.948);
+}
 .mainNav{
     width: 100%;
     height: 5rem;
@@ -8,6 +10,7 @@
 
   .mainNav h2{
     color: white;
+    cursor: pointer;
     margin-left: 2rem;
     display: inline-block;
   }
@@ -42,15 +45,15 @@
     font-weight: 500;
     padding-left: 5%;
     padding-right: 5%;
-    padding-top: 0.8%;
-    padding-bottom: 0.8%;
+    padding-top: 1.2%;
+    padding-bottom: 1.6%;
     margin-left: 5%;
     border:1px solid rgba(128, 128, 128, 0);
-    border-radius: 8px; 
+    height: 100%;
   }
 
   .settingBox:hover{
-    background-color: rgba(67, 90, 107, 0.784);
+    background-color: rgba(67, 90, 107, 0.513);
   } 
 
   .popolarPostsHeader{
@@ -79,3 +82,45 @@
     cursor: pointer;
     margin-top: 1rem;   
   }
+  .footer{
+
+  padding-top: 2rem;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 10rem;
+  background-color: rgb(21, 80, 122);
+  color: white;
+  text-align: center;
+  }
+
+  .suretodeletemessagewrapper{
+    
+    z-index: 10;
+    position: absolute;
+    width: 100%;
+    height: 154%;
+    margin-top: -14%;
+    background-color: rgba(0, 0, 0, 0.496);
+
+}
+.suretodeletemessage{
+    text-align: center;
+    width: 20%;
+    height:  fit-content;
+    background-color: azure;
+    padding: 4rem;
+    margin-top: 15%;
+    margin-left: 40%;
+    z-index: 100;
+    position: fixed;
+}
+.sureBtn{
+  padding: 0.6rem;
+  width: 25%;
+  border-radius: 8px;
+  border: none;
+  font-weight: 400;
+  background-color: rgba(220, 207, 182, 0.741);
+  cursor: pointer;
+}

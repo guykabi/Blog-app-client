@@ -1,4 +1,4 @@
-import { useState,useRef } from 'react'
+import { useState,useRef, useEffect } from 'react'
 import { useNavigate,Link } from 'react-router-dom'
 import Alert from '@mui/material/Alert';
 import axios from 'axios'
@@ -20,6 +20,10 @@ const Login = (props) =>{
        const{name,value}=e.target 
        setLoginDetails({...loginDetails,[name]:value}) 
      }
+
+     useEffect(()=>{
+         localStorage.clear()
+     },[])
 
      const checkUser = async(e) =>{//Checks the user username and password
       e.preventDefault()

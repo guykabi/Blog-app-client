@@ -1,3 +1,13 @@
+
+.mainProfileDiv{
+    text-align: center;
+    background-color: rgba(193, 224, 224, 0.711);
+     height: 100%;
+     width: 100%;
+     padding-top: 2rem;
+     padding-bottom: 4rem;
+     padding-right: 1rem;
+}
 .userDetails{
     text-align: center;
     background-color: rgb(238, 227, 227);

@@ -59,13 +59,15 @@ const SignUp = (props)=>{
 
    const emailCheck = async()=>{//Checks if the email is already exsits in the database
       let {data:res}= await axios.get('http://localhost:8000/api/users/'+ newUser.Email)
-      if(res === 'Email already exists')
+     
+      if(res.message === 'Email already exists')
       {
-         setIncorrectDetail(res)
+         setIncorrectDetail(res.message)
          setDisableButton(true)
          setFormChecklist({...formChecklist,email:false})
       }
       else{
+        console.log('not here')
         setFormChecklist({...formChecklist,email:true})
         setIncorrectDetail(null)
         

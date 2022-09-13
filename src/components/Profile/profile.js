@@ -114,7 +114,7 @@ const Profile = (props)=>{
 
 
     return(
-        <div style={{textAlign:'center'}}>
+        <div className='mainProfileDiv'>
               <h2>{tokenData?.[0]?.Name + " " + tokenData?.[0]?.Lastname }</h2>  
               <form className='formDiv' onSubmit={sendPost}>  
                     <div className='userImageDiv'>

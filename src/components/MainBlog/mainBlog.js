@@ -18,7 +18,7 @@ const MainBlog = (props) =>{
   const [errorMessage,setErrorMessage]=useState(false)
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [tokenData,setTokenData]=useState(null)
-
+  const PF = 'http://localhost:8000/images/'
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -29,17 +29,26 @@ const MainBlog = (props) =>{
      setTokenData(session)
    
   },[])
+
   useEffect(()=>{
-    if(ctx.val === true)
+    if(ctx.val.errorState === true)
     {
        setErrorMessage(true)
-       console.log('Cant load page')//The error present when there is no access tokens
     }
-  },[ctx])
+    if(ctx.val.errorState === false)
+    {
+      setErrorMessage(false)
+    }
+  },[ctx.val.errorState])
+ 
+  const handleSearchPost = (e)=>{
+    ctx.setVal('searchWord',e.target.value)
+  }
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
+
   const moveToAllPosts = () =>{
     navigate('allPosts')
  } 
@@ -61,23 +70,26 @@ const MainBlog = (props) =>{
   const toProfile = ()=>{
     navigate('/profile')
   }
+
+  const handleOffSureMessage = ()=>{ //set the id of the post to delete && boolean to present or not the sure message
+    ctx.setVal('deletePost',[{'myPostIdToDelete':null,'state':false}])
+  }
   
- 
+  const yesChooseToDelete = ()=>{ //Trigger the the delete and the get new data function on myPosts comp
+    ctx.setVal('refreshMyPostData',true)
+  }
+ console.log(tokenData?.Data?.Image)
     return(
         <div className='main'>
-            {errorMessage?<div className='errormessage'>
-                          <h1>Cant load page!</h1> <br />
-                          <button className='errorBtn' onClick={(e)=>navigate('/')}>return to login page</button>
-             </div>:
-             <div>
+            
                <div className='mainNav'>
-               <h2>Post-It</h2> 
+               <h2 onClick={()=>{navigate('allPosts')}}>Post-It</h2> 
                <div className='inputWrapper'>
-                <input className='searchInput' type="text" placeholder='Search anything' />
+                <input onChange={handleSearchPost} className='searchInput' type="text" placeholder='Search anything' />
                </div> 
                <Tooltip style={{marginLeft:'66rem',marginTop:'-6rem'}} title="Profile">
                <IconButton onClick={handleOpenUserMenu}  sx={{ p: 0 }}>
-                 <Avatar alt={tokenData?.Data?.Name} src={"/static/images/avatar/2.jpg" }/>          
+               <Avatar style={tokenData?.Data?.Image?{background:`url(${PF+tokenData?.Data?.Image})`,backgroundSize:'cover',backgroundPosition:'center'}:{background:`url(${PF+'noAvatar.png'})`}} />         
                </IconButton>
              </Tooltip>
              <Menu
@@ -104,17 +116,27 @@ const MainBlog = (props) =>{
                </MenuItem>
             </Menu>
            </div>  
-           <div className='secondaryNav'>
+           {!errorMessage&&<div className='secondaryNav'>
              <div className='settingsContainer'>
                      <span  className='settingBox' onClick={moveToAllPosts}>All posts</span>
                      <span  className='settingBox' onClick={moveToAddPost} >Add post</span>
                      <span  className='settingBox' onClick={moveToMyPosts}>My posts</span>
                      <span  className='settingBox'>4</span>
              </div>
-            </div> 
+            </div> } 
+            {ctx.val.deletePost[0].state&&<div className='suretodeletemessagewrapper'>
+              {/*Sure to delete message*/}
+                    <div className='suretodeletemessage'>
+                        <h2>Are you sure to delete</h2> <br />
+                        <button className='sureBtn'  onClick={yesChooseToDelete}>Yes</button>&nbsp;<button className='sureBtn' onClick={handleOffSureMessage}>No</button>
+                    </div>
+         </div>}
               
            <Outlet/>
-           </div> }
+           <div className="footer">
+            Footer
+            </div>
+           
         </div>
     )
 } 
