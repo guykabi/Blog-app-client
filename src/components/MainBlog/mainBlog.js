@@ -71,7 +71,7 @@ const MainBlog = (props) =>{
     navigate('/profile')
   }
 
-  const handleOffSureMessage = ()=>{ //set the id of the post to delete && boolean to present or not the sure message
+  const handleOffSureMessage = ()=>{ //set the id of the post to delete and boolean to present or not the sure message
     ctx.setVal('deletePost',[{'myPostIdToDelete':null,'state':false}])
   }
   
