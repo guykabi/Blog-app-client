@@ -2,12 +2,13 @@ import './mainBlog.css'
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
-import {useState,useContext, useEffect} from 'react'
+import {useState,useContext, useEffect,useRef} from 'react'
 import Context from '../../context/Context';
 import {useNavigate,Outlet} from 'react-router-dom'
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
+import axios from 'axios';
 
 
 
@@ -18,7 +19,9 @@ const MainBlog = (props) =>{
   const [errorMessage,setErrorMessage]=useState(false)
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [tokenData,setTokenData]=useState(null)
+  const [userData,setUserData]=useState(null)
   const PF = 'http://localhost:8000/images/'
+  const inputRef = useRef()
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -27,7 +30,11 @@ const MainBlog = (props) =>{
   useEffect(()=>{
      const session = JSON.parse(localStorage.getItem('tokenData'))
      setTokenData(session)
-   
+     const getUserData =async ()=>{
+         const {data:res} = await axios.get('http://localhost:8000/api/users/'+session.Data._id)
+         setUserData(res)
+     }
+     getUserData()
   },[])
 
   useEffect(()=>{
@@ -77,19 +84,24 @@ const MainBlog = (props) =>{
   
   const yesChooseToDelete = ()=>{ //Trigger the the delete and the get new data function on myPosts comp
     ctx.setVal('refreshMyPostData',true)
+  } 
+
+  if(ctx.val.deleteSearchWord === true)//Set the search input to empty string when returing to page
+  {
+    inputRef.current.value = ''
+    ctx.setVal('deleteSearchWord',false)//Than return the state to the initial state
   }
- console.log(tokenData?.Data?.Image)
     return(
         <div className='main'>
             
                <div className='mainNav'>
                <h2 onClick={()=>{navigate('allPosts')}}>Post-It</h2> 
                <div className='inputWrapper'>
-                <input onChange={handleSearchPost} className='searchInput' type="text" placeholder='Search anything' />
+                <input onChange={handleSearchPost} ref={inputRef} className='searchInput' type="text" placeholder='Search anything' />
                </div> 
                <Tooltip style={{marginLeft:'66rem',marginTop:'-6rem'}} title="Profile">
                <IconButton onClick={handleOpenUserMenu}  sx={{ p: 0 }}>
-               <Avatar style={tokenData?.Data?.Image?{background:`url(${PF+tokenData?.Data?.Image})`,backgroundSize:'cover',backgroundPosition:'center'}:{background:`url(${PF+'noAvatar.png'})`}} />         
+               <Avatar  style={userData?.[0]?.Image?{background:`url(${PF+userData?.[0]?.Image})`,backgroundSize:'cover',backgroundPosition:'center'}:{background:`url(${PF+'noAvatar.png'})`}} />         
                </IconButton>
              </Tooltip>
              <Menu
@@ -121,7 +133,7 @@ const MainBlog = (props) =>{
                      <span  className='settingBox' onClick={moveToAllPosts}>All posts</span>
                      <span  className='settingBox' onClick={moveToAddPost} >Add post</span>
                      <span  className='settingBox' onClick={moveToMyPosts}>My posts</span>
-                     <span  className='settingBox'>4</span>
+                   
              </div>
             </div> } 
             {ctx.val.deletePost[0].state&&<div className='suretodeletemessagewrapper'>

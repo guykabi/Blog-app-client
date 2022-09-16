@@ -11,12 +11,18 @@ const Addpost = ()=>{
   const [file,setFile]=useState(null)
   const [postDetails,setPostDetails]=useState({})
   const navigate = useNavigate()
+  const [userData,setUserData]=useState(null)
   const PF = 'http://localhost:8000/images/'//The path to saved images in the server
 
 
    useEffect(()=>{
       const session = JSON.parse(localStorage.getItem('tokenData'))//Pulling out the data from the localstorgae
       setTokenData(session)
+      const getUserData =async ()=>{
+        const {data:res} = await axios.get('http://localhost:8000/api/users/'+session.Data._id)
+        setUserData(res)
+    }
+    getUserData()
   },[]) 
 
   
@@ -44,7 +50,7 @@ const Addpost = ()=>{
         let obj = postDetails
         obj.UserId=tokenData.Data._id
         obj.Name=tokenData.Data.Name
-        obj.ProfileImage = tokenData.Data.Image
+        obj.ProfileImage = userData[0].Image
         const data = new FormData()
         const fileName = postDetails.Image
        

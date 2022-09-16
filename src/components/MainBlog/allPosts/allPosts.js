@@ -18,8 +18,8 @@ const AllPosts = (props)=>{
 
 useEffect(()=>{
   const getAllPosts =async ()=>{
+
     const session = JSON.parse(localStorage.getItem('tokenData')) //The user data + token
-   
     try{
      const {data:res}=await axios.get('http://localhost:8000/api/posts',{
       headers: {
@@ -33,6 +33,10 @@ useEffect(()=>{
           setReservePosts(res)//Set the posts to the reserve posts state
           let mostLikes =  res.slice(0,2) 
           setMostLikedPosts(mostLikes)
+        } 
+        if(ctx.val.searchWord.length > 0)
+        {
+          ctx.setVal('deleteSearchWord',true)
         }
      
       }catch(err)

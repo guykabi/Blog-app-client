@@ -72,15 +72,23 @@ const Profile = (props)=>{
        
             const {data:res} = await axios.post('http://localhost:8000/api/upload',data)//Setting images inside the server public file
             if(res === 'Image added')
-             {
-                try{
-                  const {data:res} = await axios.patch('http://localhost:8000/api/users/'+tokenData?.[0]._id,user)
-                  navigate('/main/allPosts')
-                }catch(err)
+            {
+              let obj = {'ProfileImage':user.Image}
+              console.log(obj)
+              try{
+                const {data:resp} =await axios.patch('http://localhost:8000/api/posts/'+tokenData?.[0]._id,obj)
+                console.log(resp)
+                const {data:res2} = await axios.patch('http://localhost:8000/api/users/'+tokenData?.[0]._id,user)
+                if(resp === 'ProfileImages Updated')
                 {
-                 console.log(err)
+                  navigate('/main/allPosts')
                 }
-             }
+              }catch(err)
+              {
+                  console.log('Error')
+              }
+            }
+             
           }catch(err)
             {
              console.log(err)

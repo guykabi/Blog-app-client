@@ -18,8 +18,10 @@ function App() {
    const [val, setVal] = useState({ //Context states to manage opperations
     errorState:false,
     searchWord:'',
+    deleteSearchWord:false,
     deletePost:[{state:false,myPostIdToDelete:null}],
     refreshMyPostData:false,
+
   });
    
     const Delete = () =>{
