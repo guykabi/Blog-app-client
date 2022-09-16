@@ -34,9 +34,9 @@ useEffect(()=>{
           let mostLikes =  res.slice(0,2) 
           setMostLikedPosts(mostLikes)
         } 
-        if(ctx.val.searchWord.length > 0)
+        if(ctx.val.searchWord.length > 0)//Checks if the search input is not empty when the component is load
         {
-          ctx.setVal('deleteSearchWord',true)
+          ctx.setVal('deleteSearchWord',true)//The context field that trigger the deletion of the search input
         }
      
       }catch(err)
@@ -56,7 +56,7 @@ useEffect(()=>{
    }
    if(ctx.val.searchWord.length > 0)
    {
-   let results =  posts?.filter(p=> p.Title.toLowerCase().includes(ctx.val.searchWord.toLowerCase()))
+   let results =  posts?.filter(p=> p.Title.toLowerCase().includes(ctx.val.searchWord.toLowerCase()))//Search posts both lowercase and uppercase
    setPosts(results)
    }
 },[ctx.val.searchWord])

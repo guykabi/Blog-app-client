@@ -86,9 +86,9 @@ const MainBlog = (props) =>{
     ctx.setVal('refreshMyPostData',true)
   } 
 
-  if(ctx.val.deleteSearchWord === true)//Set the search input to empty string when returing to page
+  if(ctx.val.deleteSearchWord === true)
   {
-    inputRef.current.value = ''
+    inputRef.current.value = '' //Set the search input to empty string when returing to page
     ctx.setVal('deleteSearchWord',false)//Than return the state to the initial state
   }
     return(
