@@ -101,7 +101,9 @@ const MainBlog = (props) =>{
                </div> 
                <Tooltip style={{marginLeft:'66rem',marginTop:'-6rem'}} title="Profile">
                <IconButton onClick={handleOpenUserMenu}  sx={{ p: 0 }}>
-               <Avatar  style={userData?.[0]?.Image?{background:`url(${PF+userData?.[0]?.Image})`,backgroundSize:'cover',backgroundPosition:'center'}:{background:`url(${PF+'noAvatar.png'})`}} />         
+               <Avatar  alt={PF+'noAvatar.png'} src={PF+userData?.[0]?.Image}> 
+               {!userData?.[0]?.Image&&userData?.[0]?.Name.slice(0,1)} 
+               </Avatar>       
                </IconButton>
              </Tooltip>
              <Menu

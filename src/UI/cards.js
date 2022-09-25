@@ -11,7 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useEffect, useState,useContext } from 'react';
+import React,{ useEffect, useState,useContext, useMemo } from 'react';
 import Context from '../context/Context';
 import { useNavigate } from 'react-router-dom';
 import axios, {Axios} from 'axios'
@@ -31,12 +31,11 @@ const Cards = (props) =>{
 
   const [expanded, setExpanded] = useState(false);
   const ctx = useContext(Context) //Context
-  const [randomColor,setRandomColor]=useState(null)
   const [like,setLike]=useState(false) //Change like sign
   const userData =  JSON.parse(localStorage.getItem('tokenData'))//Pulling out the data from the localstorgae
   const PF = 'http://localhost:8000/images/'
   const navigate = useNavigate()
-  
+  console.log('card load')
   const handleExpandClick = () => {
     setExpanded(!expanded);
   }; 
@@ -83,7 +82,6 @@ const Cards = (props) =>{
   }    
   useEffect(()=>{
     //Generate random color 
-    setRandomColor(Math.floor(Math.random()*16777215).toString(16));
     let ifLike =  props.data.Likes.find(like => like.Username === userData.Data._id)//Checks if the post got like by the user
     if(ifLike)
     {
@@ -97,7 +95,9 @@ const Cards = (props) =>{
   const deletePost =async () =>{
          ctx.setVal('deletePost',[{'myPostIdToDelete':props.data._id,'state':true}])
   }
- 
+  
+
+  
 
     return(
         <Card  elevation={9} style={{background:'rgba(245, 245, 245, 0.401)',borderRadius:'12px',marginLeft:'12rem',marginBottom:'2rem'}} className='card'>
@@ -106,7 +106,8 @@ const Cards = (props) =>{
              avatar={props.isAvatar?null:
                 <Avatar 
                   onClick={()=>{navigate('/main/singleUser/'+props?.data?.UserId)}}
-                  style={props?.data?.ProfileImage?{background:`url(${PF+props?.data?.ProfileImage})`,backgroundSize:'cover',backgroundPosition:'center'}:{backgroundColor:'#'+randomColor,cursor:'pointer'}}
+                  src={props?.data?.ProfileImage?PF+props?.data?.ProfileImage:null}
+                  style={!props?.data?.ProfileImage?{backgroundColor:'#'+props?.data?.Color,cursor:'pointer'}:null}
                   aria-label="recipe">
                  {!props?.data?.ProfileImage&&props.data.Name.slice(0,1)}
                 </Avatar>
@@ -116,7 +117,7 @@ const Cards = (props) =>{
             style={{cursor: 'pointer'}}
              component="img"
               height="194"
-              image={PF+props.data?.Image}
+              image={PF+props?.data?.Image}
              />
            <CardContent>
              <Typography variant="body2" color="text.secondary">

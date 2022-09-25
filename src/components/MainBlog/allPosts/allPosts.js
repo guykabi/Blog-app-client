@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
-const AllPosts = (props)=>{
+const AllPosts = ()=>{
   const ctx = useContext(Context) //Context 
   const navigate = useNavigate()
   const [posts,setPosts]=useState(null)//All the posts
@@ -49,13 +49,13 @@ useEffect(()=>{
 },[]) 
 
 useEffect(()=>{
-  
+  //When search triggered on mainBlog component
    if(ctx.val.searchWord.length === 0)
    {
       setPosts(reservePosts)
    }
    if(ctx.val.searchWord.length > 0)
-   {
+   {//Filter the post by search word
    let results =  posts?.filter(p=> p.Title.toLowerCase().includes(ctx.val.searchWord.toLowerCase()))//Search posts both lowercase and uppercase
    setPosts(results)
    }

@@ -20,7 +20,7 @@
     width: 400px;
     height: 400px;
     background-color: white;
-    box-shadow: 1px 1px 4px 4px rgba(57, 55, 55, 0.819);
+    box-shadow: 1px 1px 4px 4px rgba(57, 55, 55, 0.409);
 }
 
 .userImageDiv{
@@ -106,12 +106,22 @@
        z-index: 10;
        position: absolute;
        margin-left: 9.5rem;
-      margin-top: -2rem;
-      background-color: rgba(250, 235, 215, 0);
-      border: none;
-      cursor: pointer;
-      font-weight: 500;
-      font-size: larger;
+       margin-top: -2rem;
+       background-color: rgba(250, 235, 215, 0);
+       border: none;
+       cursor: pointer;
+       font-weight: 500;
+       font-size: larger;
+  }
+
+  .removeImage{
+    margin: 0 auto;
+    font-size: small; 
+    font-weight: 400;
+    color: black;
+  }
+  .removeImage:hover{
+    color: rgba(45, 43, 43, 0.757);
   }
   
  

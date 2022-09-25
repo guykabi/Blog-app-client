@@ -93,7 +93,7 @@ const Addpost = ()=>{
                 <textarea required onChange={handlePostDeatils} className='addPostTextArea' placeholder='Tell us about your experience' name="Content"  rows="4"></textarea> <br />
                 <input required onChange={handlePostDeatils} style={tempBackgroundInput?{backgroundImage:`url(${tempBackgroundInput})`}:{backgroundImage:`url(${PF+'camera.jpg'})` }} id='uplaodImageInput'  type="file" name='Image' />
                 <br />
-                <button className='btnSubmit' type='submit'>Create!</button>
+                <button className='btnSubmit2' type='submit'>Create!</button>
              </form>
            </div>
            </div>

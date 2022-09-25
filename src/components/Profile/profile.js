@@ -74,10 +74,9 @@ const Profile = (props)=>{
             if(res === 'Image added')
             {
               let obj = {'ProfileImage':user.Image}
-              console.log(obj)
+              
               try{
                 const {data:resp} =await axios.patch('http://localhost:8000/api/posts/'+tokenData?.[0]._id,obj)
-                console.log(resp)
                 const {data:res2} = await axios.patch('http://localhost:8000/api/users/'+tokenData?.[0]._id,user)
                 if(resp === 'ProfileImages Updated')
                 {
@@ -98,13 +97,35 @@ const Profile = (props)=>{
           else{
           try{
               const {data:res} = await axios.patch('http://localhost:8000/api/users/'+tokenData?.[0]._id,user)
+              
            }catch(err)
              {
                console.log(err)
              }
     }
    }
+  } 
+
+  //If user wants to delete is profile image
+  const deleteProfileImage =async ()=>{
+    try{
+      let obj ={'Image':''} //Set empty image field
+      let obj2 = {'ProfileImage':''} //Set in all the user posts empty profile image
+      
+       const {data:resp} = await axios.patch('http://localhost:8000/api/users/'+tokenData?.[0]._id,obj)
+       const {data:res}= await axios.patch('http://localhost:8000/api/posts/'+tokenData?.[0]._id,obj2)
+       console.log(res)
+       if(res === 'ProfileImages Updated')
+       {
+        
+        navigate('/main/allPosts')
+       }
+    }catch(err){
+      console.log(err)
+    }
   }
+
+  
 
    //Edit user details fileds
      const edit = ()=>{
@@ -139,7 +160,8 @@ const Profile = (props)=>{
                             type="file" 
                              />
                               {tempImage&&<button onClick={()=>(setTempImage(null),setFile(null),setUser({...user,['Image']:null}))} className='deleteImage'>X</button>} {/*Button to delete the chosen image*/}
-                            <label htmlFor="customFile">Click to choose image</label>
+                              {tokenData?.[0]?.Image&&<span onClick={deleteProfileImage} className='removeImage'>Remove profile Image</span>}
+
                         
                     </div> <br /> 
                       {!bool && <div className='change'>

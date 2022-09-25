@@ -43,9 +43,11 @@ const SignUp = (props)=>{
 
   const sendNewUser = async (e) =>{ //The send form function
     e.preventDefault()
+    let obj = newUser 
+    obj.Color = Math.floor(Math.random()*16777215).toString(16)
     try{
 
-          let {data:res}= await axios.post('http://localhost:8000/api/users',newUser)
+          let {data:res}= await axios.post('http://localhost:8000/api/users',obj)
     
           setDivSwitch(false)
           setTimeout(()=>{

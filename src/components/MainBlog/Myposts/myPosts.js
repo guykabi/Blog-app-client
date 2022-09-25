@@ -67,6 +67,7 @@ if(posts?.length < 1)
    
 
     return(
+        <>
        <div className='myPostsDiv'> <br />
            <h1>My Posts</h1> <br /> 
            <div className='innerMyPostsDiv'>
@@ -81,6 +82,7 @@ if(posts?.length < 1)
            
 
        </div>
+       </>
     )
 } 
 export default MyPosts
