@@ -3,16 +3,21 @@
     font-size: x-large;
     border-bottom: 1px gray solid;
     width: 20%;
-    margin-left: 30rem;
+    margin-left: 40%;
     padding-bottom: 5px;
-  
+    z-index: 10;
+    position: absolute;
+   
   } 
   .popolarDiv{
     text-align: center;
     background-color: rgba(197, 231, 231, 0.711);
-    
-    
+    white-space:nowrap;
+    overflow-y: scroll;
+    margin-bottom: 5%;
   } 
+  
+  
   .allPostsDiv{
     overflow: scroll;
     background-color: rgba(197, 231, 231, 0.711);

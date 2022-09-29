@@ -48,14 +48,14 @@ const Login = (props) =>{
       {
         setAtSign(true)
         setTimeout(()=>{
-           setAtSign(true)
-        },)
+           setAtSign(false)
+        },2000)
       }
       else{
 
       try{
-
-        let {data:res}= await axios.get('http://localhost:8000/api/users/'+emailObj.Email)//Checking if the email exists in the database
+           
+         let {data:res}= await axios.get('http://localhost:8000/api/users/'+emailObj.Email)//Checking if the email exists in the database
          if(res === 'Email is not exists')
          {
             inputRef.current.value = ''

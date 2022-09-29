@@ -10,12 +10,14 @@ const SinglePost = (props) =>{
     const [comment,setComment]=useState({})//The comment the user write
     const [userData,setUserData]=useState(null)//The data of the user from the local storage
     const [changeToGetExtraData,setChangeToGetExtraData]=useState(false)
-    let [numOfLike,setNumOfLike]=useState(0)//Count the number of like of the post
+    const [numOfLike,setNumOfLike]=useState(0)
     const [emptyComment,setEmptyComment]=useState(false) //Checks if the user typed anything to the comment input
     const [sureToDelete,setSureToDelete]=useState(null)// Set the chosen comment to delete
     const {id} = useParams()
     const inputRef = useRef()
     const PF = 'http://localhost:8000/images/' //The url of the images file in the server
+
+
 
     useEffect(()=>{
         const getPostData =async ()=>{
@@ -31,10 +33,13 @@ const SinglePost = (props) =>{
             {
               setNumOfLike(0)
             }
-            else{
-            res[0].Likes.forEach(l=> setNumOfLike(numOfLike+1)) //Counts the number of like that the post recieved
-            }
-           
+             else
+             { 
+              let tempLikes = 0 
+              res[0].Likes.forEach(like=> tempLikes++) //Counts the number of like that the post recieved
+              setNumOfLike(tempLikes) 
+             }
+            
           }
         }catch(err)
         {

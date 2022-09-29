@@ -35,7 +35,6 @@ const Cards = (props) =>{
   const userData =  JSON.parse(localStorage.getItem('tokenData'))//Pulling out the data from the localstorgae
   const PF = 'http://localhost:8000/images/'
   const navigate = useNavigate()
-  console.log('card load')
   const handleExpandClick = () => {
     setExpanded(!expanded);
   }; 

@@ -1,12 +1,11 @@
 .mainlogindiv{
     text-align: center;
+    margin: 0 auto;
     margin-top: 6rem;
-    margin-left: 30rem;
     width: 20rem;
     height: fit-content;
-    padding: 1rem;
+    padding: 1.5rem;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.6);
-    
 } 
 .form input{
    margin-bottom: 8px;
