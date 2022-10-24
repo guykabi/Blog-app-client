@@ -15,8 +15,12 @@
     white-space:nowrap;
     overflow-y: scroll;
     margin-bottom: 5%;
+    padding-right: 2rem;
   } 
   
+ .cardsOfPopularDiv{
+  margin-left: -5rem;
+ }
   
   .allPostsDiv{
     overflow: scroll;

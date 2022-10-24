@@ -28,12 +28,12 @@ h2{
 }
 .formAddPost input{
     display: inline-block;
-    background-color: rgb(254, 253, 253);
+    background-color: rgba(254, 253, 253, 0);
     margin: 0 auto;
     width: 42%;
     height: 1.6rem;
-    border-radius: 8px;
-    border: none;
+    border: 1px black solid;
+    border-radius: 2px;
 }
 .addPostTextArea{
     resize: none;
@@ -41,12 +41,14 @@ h2{
     width: 86%;
     padding-top: 4px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: rgba(240, 248, 255, 0);
     font-size: larger;
-    border-radius: 9px;
-    border:none;
+    border-radius: 2px;
+    border:1px solid black;
 }
 .addPostTextArea::placeholder{
     text-align: center;
+    font-size: medium;
 }
 #uplaodImageInput{
     margin: 1rem;

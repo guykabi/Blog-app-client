@@ -45,6 +45,10 @@ useEffect(()=>{
   }
   getAllPosts()
 },[]) 
+
+let results;
+
+
 useEffect(()=>{
   //When search triggered on mainBlog component
    if(ctx.val.searchWord.length === 0)
@@ -53,7 +57,7 @@ useEffect(()=>{
    }
    if(ctx.val.searchWord.length > 0)
    {//Filter the post by search word
-   let results =  posts?.filter(p=> p.Title.toLowerCase().includes(ctx.val.searchWord.toLowerCase()))//Search posts both lowercase and uppercase
+   results =  reservePosts?.filter(p=> p.Title.toLowerCase().includes(ctx.val.searchWord.toLowerCase()))//Search posts both lowercase and uppercase
    setPosts(results)
    }
 },[ctx.val.searchWord])
@@ -108,13 +112,15 @@ if(errorMessage)//Error message when there is no token provided
              </div>
              <div className='popolarDiv'>
                 <h2 className='popolarPostsHeader'>Popular Posts</h2> <br /> <br />
-                <Grid container spacing={20}>
+                <div className='cardsOfPopularDiv'>
+                  <Grid container spacing={0}>
                 {mostLikedPosts?.slice(0,4).map((post,index)=>( //Will be the top 4 most liked posts
-                  <Grid key={index} item xs={3}> 
-                        <Cards   key={index} data={post} />
-                  </Grid>
+                        <Grid key={index} item xs={6} >
+                        <Cards  key={index+Date.now()} data={post} />
+                        </Grid>
                    ))}
-                </Grid>
+                   </Grid>
+                </div>
              </div>
     </>
   )

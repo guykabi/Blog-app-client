@@ -114,7 +114,6 @@ const Profile = (props)=>{
       
        const {data:resp} = await axios.patch('http://localhost:8000/api/users/'+tokenData?.[0]._id,obj)
        const {data:res}= await axios.patch('http://localhost:8000/api/posts/'+tokenData?.[0]._id,obj2)
-       console.log(res)
        if(res === 'ProfileImages Updated')
        {
         

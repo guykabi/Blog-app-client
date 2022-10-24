@@ -1,12 +1,15 @@
 .card{
     text-align: center;
-    width: 18rem;
+    width: 20rem;
     height:fit-content;
     border-radius: 8px;
     border: 1px solid lightgray;
     margin-top: 4rem;
     display: inline-block;
+   
 }
+
+   
 
 
  .title{
@@ -21,7 +24,7 @@
  .deleteSignCard{
    position: absolute;
    z-index: 2;
-   margin-left: 21%;
+   margin-left: 24%;
    font-weight: 700;
    cursor: pointer;
  }

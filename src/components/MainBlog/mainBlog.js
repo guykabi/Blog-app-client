@@ -9,11 +9,12 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
+import {SocialIcon} from 'react-social-icons'
 
 
 
 const MainBlog = (props) =>{
-
+ 
   const navigate = useNavigate()  
   const ctx = useContext(Context) //Context
   const [errorMessage,setErrorMessage]=useState(false)
@@ -31,7 +32,7 @@ const MainBlog = (props) =>{
      const session = JSON.parse(localStorage.getItem('tokenData'))
      setTokenData(session)
      const getUserData =async ()=>{
-         const {data:res} = await axios.get('http://localhost:8000/api/users/'+session.Data._id)
+         const {data:res} = await axios.get('http://localhost:8000/api/users/'+session?.Data?._id)
          setUserData(res)
      }
      getUserData()
@@ -78,13 +79,13 @@ const MainBlog = (props) =>{
     navigate('/profile')
   }
 
-  const handleOffSureMessage = ()=>{ //set the id of the post to delete and boolean to present or not the sure message
+  /*const handleOffSureMessage = ()=>{ //set the id of the post to delete and boolean to present or not the sure message
     ctx.setVal('deletePost',[{'myPostIdToDelete':null,'state':false}])
-  }
+  }*/
   
-  const yesChooseToDelete = ()=>{ //Trigger the the delete and the get new data function on myPosts comp
+  /*const yesChooseToDelete = ()=>{ //Trigger the the delete and the get new data function on myPosts comp
     ctx.setVal('refreshMyPostData',true)
-  } 
+  } */
 
   if(ctx.val.deleteSearchWord === true)
   {
@@ -122,8 +123,8 @@ const MainBlog = (props) =>{
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-                <MenuItem  onClick={handleCloseUserMenu}>
-                  <Typography onClick={toLogOut} textAlign="center">{'Log Out'}</Typography>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography onClick={toLogOut}  textAlign="center">{'Log Out'}</Typography>
                 </MenuItem>
                  <MenuItem  onClick={handleCloseUserMenu}>
                  <Typography onClick={toProfile} textAlign="center">{'Profile'}</Typography>
@@ -138,18 +139,21 @@ const MainBlog = (props) =>{
                    
              </div>
             </div> } 
-            {ctx.val.deletePost[0].state&&<div className='suretodeletemessagewrapper'>
-              {/*Sure to delete message*/}
+            {/*ctx.val.deletePost[0].state&&<div className='suretodeletemessagewrapper'>
+              {/*Sure to delete message - should move to the modal component} 
                     <div className='suretodeletemessage'>
                         <h2>Are you sure to delete</h2> <br />
                         <button className='sureBtn'  onClick={yesChooseToDelete}>Yes</button>&nbsp;<button className='sureBtn' onClick={handleOffSureMessage}>No</button>
                     </div>
-         </div>}
+            </div>*/}
               
            <Outlet/>
            <div className="footer">
-            Footer
-            </div>
+            <h4>Finds us on</h4>
+            <SocialIcon bgColor="white" style={{ height: 30, width: 30 }} url="https://instagram.com"/>&nbsp;
+            <SocialIcon fgColor="white" style={{ height: 30, width: 30, marginLeft:'0.5rem' }} url="https://facebook.com"/>&nbsp;
+            <SocialIcon fgColor="white" style={{ height: 30, width: 30,marginLeft:'0.5rem' }} url="https://whatsapp.com"/>
+           </div>
            
         </div>
     )

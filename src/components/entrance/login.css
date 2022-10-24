@@ -6,7 +6,18 @@
     height: fit-content;
     padding: 1.5rem;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.6);
+    animation: fadeInAnimation 0.8s linear;
 } 
+
+  @keyframes fadeInAnimation {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
 .form input{
    margin-bottom: 8px;
    width: 70%;

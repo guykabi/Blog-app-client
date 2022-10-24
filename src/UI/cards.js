@@ -14,7 +14,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import React,{ useEffect, useState,useContext, useMemo } from 'react';
 import Context from '../context/Context';
 import { useNavigate } from 'react-router-dom';
-import axios, {Axios} from 'axios'
+import axios from 'axios'
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -28,7 +28,7 @@ const ExpandMore = styled((props) => {
   }));
 
 const Cards = (props) =>{
-
+ 
   const [expanded, setExpanded] = useState(false);
   const ctx = useContext(Context) //Context
   const [like,setLike]=useState(false) //Change like sign
@@ -81,6 +81,7 @@ const Cards = (props) =>{
   }    
   useEffect(()=>{
     //Generate random color 
+    
     let ifLike =  props.data.Likes.find(like => like.Username === userData.Data._id)//Checks if the post got like by the user
     if(ifLike)
     {
@@ -92,22 +93,20 @@ const Cards = (props) =>{
   },[])
 
   const deletePost =async () =>{
-         ctx.setVal('deletePost',[{'myPostIdToDelete':props.data._id,'state':true}])
+        props.onShow(props.data._id)
   }
   
-
-  
-
     return(
         <Card  elevation={9} style={{background:'rgba(245, 245, 245, 0.401)',borderRadius:'12px',marginLeft:'12rem',marginBottom:'2rem'}} className='card'>
-          {props?.isDeleted&&<div onClick={deletePost} className='deleteSignCard'>x</div>}
-            <CardHeader  title={props.data.Title} titleTypographyProps={{variant:'h6' }}
+          {props?.isDeleted&&<div onClick={deletePost} className='deleteSignCard'>x</div>}{/*Checks if the post belongs to the user and add a X button to delete the post */}
+          
+            <CardHeader  title={props.data.Title}  titleTypographyProps={{variant:'h6' }}
              avatar={props.isAvatar?null:
                 <Avatar 
                   onClick={()=>{navigate('/main/singleUser/'+props?.data?.UserId)}}
                   src={props?.data?.ProfileImage?PF+props?.data?.ProfileImage:null}
                   style={!props?.data?.ProfileImage?{backgroundColor:'#'+props?.data?.Color,cursor:'pointer'}:null}
-                  aria-label="recipe">
+                  aria-label="recipe" alt='i'>
                  {!props?.data?.ProfileImage&&props.data.Name.slice(0,1)}
                 </Avatar>
               }/>
@@ -117,6 +116,7 @@ const Cards = (props) =>{
              component="img"
               height="194"
               image={PF+props?.data?.Image}
+              alt='i'
              />
            <CardContent>
              <Typography variant="body2" color="text.secondary">

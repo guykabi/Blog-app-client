@@ -12,9 +12,10 @@ const SignUp = (props)=>{
   const[passwordObj,setPasswordObj]=useState({})//The state goal is to check if the confirmpassword and the password are equal
   const [disableButton,setDisableButton]=useState(true) //Enable and disable the set form button
   const [incorrectDetail,setIncorrectDetail]=useState(null) //Trigger the error message when necessary
-  const [formChecklist,setFormChecklist]=useState({email:false,password:false}) //Checks if all the email is not taken and the password is confirmed
+  const [formChecklist,setFormChecklist]=useState({email:false,password:false}) //Checks if the email is not taken and the password is confirmed
   const [confirmPass,setConfirmPass]=useState(false)//Trigger the V sign in the confirmpassword input
   const [divSwitch,setDivSwitch]=useState(true)
+  const [text,setText]=useState('')
   const navigate = useNavigate() 
   
 
@@ -34,9 +35,12 @@ const SignUp = (props)=>{
         setFormChecklist({...formChecklist,password:false})
 
         if( e.target.value === newUser?.Password || e.target.value === passwordObj?.confirmpassword  )
-        {
+        { 
+          if(e.target.value.length > 0)
+          {
           setConfirmPass(true)
           setFormChecklist({...formChecklist,password:true})
+          }
         }
     }
   } 
@@ -49,13 +53,18 @@ const SignUp = (props)=>{
 
           let {data:res}= await axios.post('http://localhost:8000/api/users',obj)
     
-          setDivSwitch(false)
+          setDivSwitch(false)//Change the screen to successful registration message
+          setText('Your registration is accepeted')
           setTimeout(()=>{
-             navigate('/')
+             navigate('/') //Return to the login page
         },2500)
       }catch(err)
       {
-        console.log(err)
+        setDivSwitch(false)//Change the screen to failed registration message
+          setText('Your registration failed, plesse try again!')
+          setTimeout(()=>{
+            navigate('/') //Return to the login page
+       },2500)
       }
   } 
 
@@ -69,7 +78,6 @@ const SignUp = (props)=>{
          setFormChecklist({...formChecklist,email:false})
       }
       else{
-        console.log('not here')
         setFormChecklist({...formChecklist,email:true})
         setIncorrectDetail(null)
         
@@ -108,7 +116,7 @@ const SignUp = (props)=>{
                </form>
            </div> :
             <div style={{textAlign:'center',marginTop:'15rem'}}>
-                   <h2>{newUser.Name},Your registration is accepeted</h2>
+                   <h2>{newUser.Name} ,{text}</h2>
            </div>}
     </div>
   )

@@ -12,6 +12,7 @@ import Context from './context/Context';
 import SinglePost from './components/MainBlog/singlePost/singlePost';
 import Profile from './components/Profile/profile';
 import Singleuser from './components/MainBlog/singleUser/singleUser';
+import Modal from './UI/Modal';
 
 function App() {
 
@@ -22,15 +23,36 @@ function App() {
     deletePost:[{state:false,myPostIdToDelete:null}],
     refreshMyPostData:false,
 
-  });
+  }); 
+
+const showPopUp = (e)=>{//Shows to modal popUp 
+  setVal({...val,['deletePost']:[{state:true,myPostIdToDelete:e}]})
+}
+
+  const hidePopUp = ()=>{//Hide the modal popUp
+    setVal({...val,['deletePost']:[{state:false,myPostIdToDelete:null}]})
+  }
    
     const Delete = () =>{
-      localStorage.clear() //Clear the local storga eon users log out
+      localStorage.clear() //Clear the local storage on users log out
     }
+
+    const yesChooseToDelete = ()=>{ //Trigger the the delete and the get new data function on myPosts comp
+      setVal({...val,['refreshMyPostData']:true})
+    } 
+
+    
 
   return (
     <div className="App">
       <Context.Provider value={{val,setVal:(property,data)=>setVal({...val,[property]:data})}}>
+          {val.deletePost?.[0]?.state&&<Modal
+           onClose={hidePopUp}>
+                    <div>
+                        <h2>Are you sure to delete</h2> <br />
+                        <button className='sureBtn' onClick={yesChooseToDelete}>Yes</button>&nbsp;<button className='sureBtn' onClick={hidePopUp}>No</button>
+                    </div>
+            </Modal>}
         <Routes> 
         <Route path='/' element={<Login/>}/>
             <Route path='signup' element={<SignUp/>}/>
@@ -39,7 +61,7 @@ function App() {
           <Route path='/main' element={<MainBlog deleteToken={Delete} />}> {/*all user data comes in the arrivedToken*/}
                <Route path='addPost' element={<Addpost/>}/>
                <Route path='allPosts' element={<AllPosts/>}/>
-               <Route path='myPosts' element={<MyPosts/>}/>
+               <Route path='myPosts' element={<MyPosts onShow={showPopUp} />}/>
                <Route path='singlePost/:id' element={<SinglePost/>}/>
                <Route path='singleUser/:id' element={<Singleuser/>}/>
           </Route>

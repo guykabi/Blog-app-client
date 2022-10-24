@@ -29,7 +29,6 @@ const MyPosts = (props)=>{
     
    
   useEffect(()=>{
-
     const refreshMyPosts =async ()=>{
         if(ctx.val.refreshMyPostData === true)
         {
@@ -66,6 +65,10 @@ if(posts?.length < 1)
 }
    
 
+const onShow2 = (e)=>{
+    props.onShow(e)
+}
+
     return(
         <>
        <div className='myPostsDiv'> <br />
@@ -74,7 +77,7 @@ if(posts?.length < 1)
            <Grid container spacing={-20}>
            {posts?.map((post,index)=>( //All posts rendered into cards
             <Grid key={index} item xs={4}> 
-                        <Cards  key={index+Date.now()}  isDeleted={true} data={post} />
+                        <Cards  key={index+Date.now()} onShow={onShow2}  isDeleted={true} data={post} />
                         </Grid> 
                    ))}  
                      </Grid>         

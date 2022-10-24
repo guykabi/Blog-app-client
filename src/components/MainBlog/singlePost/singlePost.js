@@ -21,6 +21,7 @@ const SinglePost = (props) =>{
 
     useEffect(()=>{
         const getPostData =async ()=>{
+          window.scrollTo(0,0)
           const session = JSON.parse(localStorage.getItem('tokenData')) //The user data from localStorage
           setUserData(session)
         try{
@@ -118,14 +119,14 @@ const SinglePost = (props) =>{
         <div className='mainDivSinglePost'>
               <div className='imageDiv2'>
                 <img  src={PF+postData?.[0]?.Image} alt="i" />
-                 <div className="overlay"></div>
+                 <div className="overlay"></div>{/*The background that blur the image bottom*/}
               </div> 
               <div className='postDetailsDiv'>
                  <h2>{postData?.[0]?.Title}<span>❤️️{numOfLike}</span></h2>   
-                 <span>{postData?.[0]?.Name}&nbsp;is: {postData?.[0]?.Subtitle}</span> <br />
-                 <h4>{postData?.[0]?.Content}</h4> <br />
+                 <span>{postData?.[0]?.Name}&nbsp;is: {postData?.[0]?.Subtitle}</span> <br /> <br />
+                 <div className='postContenth4'>{postData?.[0]?.Content}</div> <br />
                  <input onChange={handleComment} ref={inputRef} name='Content' className='commentInput' type="text" placeholder={'Say somthing nice to'+' '+`${postData?.[0]?.Name}`}/>
-                  <button disabled={!emptyComment} className='btnComment' onClick={submitComment}>Send</button>  <br /> <br />
+                 <button disabled={!emptyComment} className='btnComment' onClick={submitComment}>Send</button>  <br /> <br />
                  <div className='comments'>
                  {postData?.[0]?.Comments?.map(c=>(
                       <div className='singleComment'> 
