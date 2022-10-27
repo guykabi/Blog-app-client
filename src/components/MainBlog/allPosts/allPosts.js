@@ -3,24 +3,23 @@ import Cards from '../../../UI/cards'
 import './allPosts.css'
 import Context from '../../../context/Context';
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
 
 
 const AllPosts = ()=>{
   const ctx = useContext(Context) //Context 
-  const navigate = useNavigate()
   const [posts,setPosts]=useState(null)//All the posts
   const[reservePosts,setReservePosts]=useState(null)//Store also the posts but for initailize the posts state after the user search end
   const [mostLikedPosts,setMostLikedPosts]=useState(null)//Store the most liked posts of the week
-  const [errorMessage,setErrorMessage]=useState(null)
   const [triggerTopLikes,setTriggerTopLikes]=useState(false)
+
+
 useEffect(()=>{
   const getAllPosts =async ()=>{
-
     const session = JSON.parse(localStorage.getItem('tokenData')) //The user data + token
     try{
-     const {data:res}=await axios.get('http://localhost:8000/api/posts',{
+     const {data:res}=await axios.get('/api/posts',{
       headers: {
         'x-access-token': session.accessToken //Sending the token to the server to verify the user entrance
         }})
@@ -39,7 +38,6 @@ useEffect(()=>{
      
       }catch(err)
       {
-        setErrorMessage(true)
         ctx.setVal('errorState',true)//Trigger the error message if no token provided
       }
   }
@@ -61,6 +59,7 @@ useEffect(()=>{
    setPosts(results)
    }
 },[ctx.val.searchWord])
+
 
 useEffect(()=>{
   const topfourlikes = ()=>{
@@ -91,15 +90,6 @@ useEffect(()=>{
   topfourlikes()
   },[triggerTopLikes])
   
-
-if(errorMessage)//Error message when there is no token provided
-{
-  return <div className='errormessage'>
-         <h1>Cant load page!</h1> <br />
-         <button className='errorBtn' onClick={(e)=>navigate('/')}>return to login page</button> <br /> <br /> 
-         </div> 
-}
-
 
 
   return( 

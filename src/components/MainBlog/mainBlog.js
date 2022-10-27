@@ -10,17 +10,16 @@ import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import {SocialIcon} from 'react-social-icons'
+import Modal from '../../UI/Modal';
 
 
-
-const MainBlog = (props) =>{
+const MainBlog = () =>{
  
   const navigate = useNavigate()  
   const ctx = useContext(Context) //Context
-  const [errorMessage,setErrorMessage]=useState(false)
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [tokenData,setTokenData]=useState(null)
   const [userData,setUserData]=useState(null)
+  const [nonToken,setNonToken]=useState(false)
   const PF = 'http://localhost:8000/images/'
   const inputRef = useRef()
   const handleCloseUserMenu = () => {
@@ -30,7 +29,8 @@ const MainBlog = (props) =>{
  
   useEffect(()=>{
      const session = JSON.parse(localStorage.getItem('tokenData'))
-     setTokenData(session)
+     if(!session) setNonToken(true)
+
      const getUserData =async ()=>{
          const {data:res} = await axios.get('http://localhost:8000/api/users/'+session?.Data?._id)
          setUserData(res)
@@ -38,16 +38,7 @@ const MainBlog = (props) =>{
      getUserData()
   },[])
 
-  useEffect(()=>{
-    if(ctx.val.errorState === true)
-    {
-       setErrorMessage(true)
-    }
-    if(ctx.val.errorState === false)
-    {
-      setErrorMessage(false)
-    }
-  },[ctx.val.errorState])
+
  
   const handleSearchPost = (e)=>{
     ctx.setVal('searchWord',e.target.value)
@@ -70,8 +61,7 @@ const MainBlog = (props) =>{
   }  
 
   const toLogOut = () =>{
-    setErrorMessage(false)
-    props.deleteToken()
+    //setErrorMessage(false)
     navigate('/')
   }
 
@@ -79,19 +69,22 @@ const MainBlog = (props) =>{
     navigate('/profile')
   }
 
-  /*const handleOffSureMessage = ()=>{ //set the id of the post to delete and boolean to present or not the sure message
-    ctx.setVal('deletePost',[{'myPostIdToDelete':null,'state':false}])
-  }*/
-  
-  /*const yesChooseToDelete = ()=>{ //Trigger the the delete and the get new data function on myPosts comp
-    ctx.setVal('refreshMyPostData',true)
-  } */
-
   if(ctx.val.deleteSearchWord === true)
   {
     inputRef.current.value = '' //Set the search input to empty string when returing to page
     ctx.setVal('deleteSearchWord',false)//Than return the state to the initial state
-  }
+  }  
+
+  if(nonToken)//Error message when there is no token provided
+{
+  return <Modal>
+          <div className='errormessage'>
+          <h1>Opss, seems to have a problem!</h1> <br />
+          <button className='errorBtn' onClick={()=>navigate('/')}>Return to login page</button> <br /> <br /> 
+          </div> 
+         </Modal>
+}
+
     return(
         <div className='main'>
             
@@ -131,21 +124,13 @@ const MainBlog = (props) =>{
                </MenuItem>
             </Menu>
            </div>  
-           {!errorMessage&&<div className='secondaryNav'>
+           <div className='secondaryNav'>
              <div className='settingsContainer'>
                      <span  className='settingBox' onClick={moveToAllPosts}>All posts</span>
                      <span  className='settingBox' onClick={moveToAddPost} >Add post</span>
-                     <span  className='settingBox' onClick={moveToMyPosts}>My posts</span>
-                   
+                     <span  className='settingBox' onClick={moveToMyPosts}>My posts</span>            
              </div>
-            </div> } 
-            {/*ctx.val.deletePost[0].state&&<div className='suretodeletemessagewrapper'>
-              {/*Sure to delete message - should move to the modal component} 
-                    <div className='suretodeletemessage'>
-                        <h2>Are you sure to delete</h2> <br />
-                        <button className='sureBtn'  onClick={yesChooseToDelete}>Yes</button>&nbsp;<button className='sureBtn' onClick={handleOffSureMessage}>No</button>
-                    </div>
-            </div>*/}
+           </div>  
               
            <Outlet/>
            <div className="footer">

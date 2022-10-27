@@ -45,5 +45,27 @@
   background: #555;
 } 
 
+.errormessage{
+  text-align: center;
+  margin-top: 4rem;
+  font-size: larger;
+  width: 100%;
+  height: 100%;
+}
+
+.errorBtn{
+  width: 40%;
+  height: 2.2rem;
+  background-color: rgb(174, 180, 174);
+  border: 1px solid lightgrey;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;  
+  transition: 0.8s;
+  font-size: large;
+}
+.errorBtn:hover{
+  background-color: rgb(134, 140, 134);
+}
 
   

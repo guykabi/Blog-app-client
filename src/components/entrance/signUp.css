@@ -5,16 +5,15 @@
    width: 20rem;
    height: fit-content;
    padding: 3rem;
-   margin-left: 26rem;
-   margin-top: 8rem;
-  
+   margin: 0 auto;
    box-shadow: 0 3px 10px rgb(0 0 0 / 0.6);
 }
 
 
 .signupForm{
     text-align: center;
-    margin-left: 1rem;
+    margin: 0 auto;
+    margin-bottom: 2rem;
 }
 .signupForm input{
     width: 18rem;
@@ -33,14 +32,22 @@
     width: 8rem;
     border: none;
     cursor: pointer;
+    transition: 0.8s;
 } 
+.signupbtn:hover{
+    background-color: rgb(114, 118, 114);
+}
 .returnbtn{
     background-color: rgb(174, 180, 174);
     height: 2rem;
     border: none;
     width: 6rem;
     cursor: pointer;
+    transition: 0.8s;
 } 
+.returnbtn:hover{
+    background-color: rgb(114, 118, 114);
+}
 
 .confirmInput{
     background-image: url('../../vSign_input.png');

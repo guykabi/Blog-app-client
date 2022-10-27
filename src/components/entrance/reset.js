@@ -6,7 +6,7 @@ import axios from 'axios'
 const Reset = () =>{
     const [divSwitch,setDivSwitch]=useState(true) //Boolean to control the divs display
     const [messageText,setMessageText]=useState(null) //The message that will present when success or failure
-    const [vsignSwitchCode,setVsignSwitchCode]=useState(true)//Boolean to control the vSign that checks the email code
+    const [vsignSwitchCode,setVsignSwitchCode]=useState(true)//Boolean to control the vSign that checks the code sent to the email
     const [vsignSwitchInput,setVsignSwitchInput]=useState(true)//Boolean to control the vSign that check if the passwords are equal 
     const [newPassword,setNewPassword]=useState({})//State of the new chosen password
     const navigate = useNavigate()
@@ -21,32 +21,40 @@ const Reset = () =>{
   } 
 
   const handleNewPassword =(e)=>{ //Set the password and verifies it again!
-        const{name,value}= e.target
-        setNewPassword({...newPassword,[name]:value})
+         const{name,value}= e.target
+         setNewPassword({...newPassword,[name]:value})
          setVsignSwitchInput(true)
-       if(e.target.value === newPassword.Password || e.target.value === newPassword.confirmpassword){
-           setVsignSwitchInput(false) //Trigger the vSign mark inside the confirm password input
-       }
+         if(e.target.value === newPassword.Password || e.target.value === newPassword.confirmpassword)
+          {
+            //Trigger the vSign mark inside the confirm password input
+            setVsignSwitchInput(false) 
+          }
   } 
 
   const sendNewPaswword = async(e)=> { //Submiting the new password chosen
     e.preventDefault()
     try{
-        let {data:res}=await axios.put('http://localhost:8000/api/users/'+state.userId,{Password:newPassword.Password})
+        let {data:res}=await axios.put('/api/users/'+state.userId,{Password:newPassword.Password})
         setDivSwitch(false)
         setMessageText('Your password has change!')
-        setTimeout(()=>{
+        let timer = setTimeout(()=>{
           navigate('/')
-        },[2000])
-        
+        },3000)
+
+        return () => {
+          clearTimeout(timer);
+        };    
     }catch(err)
     {
         setDivSwitch(false)
         setMessageText('Something went wrong, try again!')
-        setTimeout(()=>{
-          navigate('/')
-        },2000)
-
+        let timer =  setTimeout(()=>{
+           navigate('/')
+         },3000)
+       
+        return () => {
+          clearTimeout(timer);
+        };
     }
   }
 
@@ -56,10 +64,33 @@ const Reset = () =>{
                         className='formDivReset'>
                         <h1>Reset Password</h1>
                         <form onSubmit={sendNewPaswword}>
-                                <input type="text" disabled={!vsignSwitchCode} className={vsignSwitchCode?null:'vsign'} placeholder='Verify code' onChange={verifyCode} name="verifycode"/><br /> 
-                                <input type="password" disabled={vsignSwitchCode} required min={6} onChange={handleNewPassword} placeholder='New password' name="Password" /><br />
-                                <input type="password" disabled={vsignSwitchCode} required min={6} className={vsignSwitchInput?null:'vsign'} onChange={handleNewPassword} placeholder='Confirm password' name="confirmpassword" /><br /> <br />
-                                <button disabled={vsignSwitchInput} className='resetbtn'>Send</button>&nbsp;<button className='returnbtn' onClick={()=>navigate('/')}>Return</button>
+                                <input type="text"
+                                  disabled={!vsignSwitchCode}
+                                  className={vsignSwitchCode?null:'vsign'} 
+                                  placeholder='Verify code' 
+                                  onChange={verifyCode}
+                                  name="verifycode"/><br /> 
+                                <input type="password"
+                                  disabled={vsignSwitchCode}
+                                  required min={6}
+                                  onChange={handleNewPassword} 
+                                  placeholder='New password' 
+                                  name="Password" /><br />
+                                <input type="password"
+                                  disabled={vsignSwitchCode}
+                                  required min={6}
+                                  className={vsignSwitchInput?null:'vsign'}
+                                  onChange={handleNewPassword}
+                                  placeholder='Confirm password'
+                                  name="confirmpassword" /><br /> <br />
+                                <button disabled={vsignSwitchInput}
+                                  className='resetbtn'>
+                                  Send
+                                </button>&nbsp;
+                                <button className='returnbtn'
+                                  onClick={()=>navigate('/')}>
+                                  Return
+                                </button>
                         </form>
                 </div>
                 :<div  //Error message or success message when updating the user password
